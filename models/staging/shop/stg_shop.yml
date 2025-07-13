@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_items
+    columns:
+      - name: item_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+      - name: store_id
+        tests:
+          - not_null
+  - name: stg_products
+    columns:
+      - name: product_sku
+        tests:
+          - not_null
+          - unique
+  - name: stg_stores
+    columns:
+      - name: store_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_supplies
+    columns:
+      - name: supply_id
+        tests:
+          - unique
+          - not_null
+      - name: supply_cost
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "supply_cost >= 0"
