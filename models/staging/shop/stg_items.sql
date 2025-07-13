@@ -1,6 +1,3 @@
-{{
-    config(materialized='table')
-}}
 WITH items AS (
     SELECT * FROM {{ ref('raw_items') }}
 ) SELECT 

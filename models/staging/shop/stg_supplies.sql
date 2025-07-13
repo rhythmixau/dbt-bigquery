@@ -1,6 +1,3 @@
-{{
-    config(materialized='table')
-}}
 WITH supplies AS (
     SELECT * FROM {{ ref('raw_supplies') }}
 ) SELECT

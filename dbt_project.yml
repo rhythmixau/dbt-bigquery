@@ -37,5 +37,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   rhythmix_analytics:
-    # Applies to all files under models/example/
+    # Applies to all files under models/marts/
+    marts: 
+      materialized: table
+      +file_format: bigquery
+      +language: python
+      +dataproc_master_machine_type: n1-standard-2 # Now uses 2 CPUs
+      +dataproc_worker_machine_type: n1-standard-2 # Also 2 CPUs
+      +dataproc_num_workers: 2
+    staging:
+      materialized: view
 
