@@ -1,5 +1,5 @@
 WITH supplies AS (
-    SELECT * FROM {{ ref('raw_supplies') }}
+    SELECT * FROM {{ source('gcs_sources', 'raw_supplies') }}
 ) SELECT
     id AS product_id,
     name AS product_name,

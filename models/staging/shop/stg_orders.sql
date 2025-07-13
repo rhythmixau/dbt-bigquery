@@ -6,4 +6,4 @@ SELECT
     subtotal,
     tax_paid,
     order_total
-FROM {{ ref('raw_orders') }}
+FROM {{ source('gcs_sources', 'raw_orders') }}
