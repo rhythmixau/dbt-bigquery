@@ -1,0 +1,133 @@
+version: 2
+
+sources:
+  - name: gcs_sources
+    database: general-rhythmix-playground
+    schema: raw_data
+    tables:
+      - name: raw_customers
+        description: "Users data loaded from CSV files in a GCS bucket"
+        external:
+          location: 'gs://rhythmix_raw/raw_data/raw_customers.csv'
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: id
+            data_type: string
+            description: "Unique UUID of the customer"
+          - name: name
+            data_type: string
+            description: "The full-name of the customer"
+      - name: raw_items
+        description: "The detail of the order"
+        external:
+          location: 'gs://rhythmix_raw/raw_data/raw_items.csv'
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: id
+            data_type: string
+            description: "The line id of the item"
+          - name: order_id
+            data_type: string
+            description: "The unique UUID of the order"
+          - name: sku
+            data_type: string
+            description: "The sku code of the item"
+      - name: raw_orders
+        description: "The orders data from CSV file in a GCS bucket"
+        external:
+          location: 'gs://rhythmix_raw/raw_data/raw_orders.csv'
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: id
+            data_type: string
+            description: "The unique UUID of the order"
+          - name: customer
+            data_type: string
+            description: "The unique UUID of the customer"
+          - name: ordered_at
+            data_type: datetime
+            description: "Timestamp when the order was placed"
+          - name: store_id
+            data_type: string
+            description: "The unique UUID of the store"
+          - name: subtotal
+            data_type: integer
+            description: "The value of the order before tax in cents"
+          - name: tax_paid
+            data_type: integer
+            description: "The value of tax to be included in the order_total in cents"
+          - name: order_total
+            data_type: integer
+            description: "The total value of the order (tax included) in cents"
+      - name: raw_products
+        description: "The products data from CSV file in a GCS bucket"
+        external:
+          location: 'gs://rhythmix_raw/raw_data/raw_products.csv'
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: sku
+            data_type: string
+            description: "The product sku code"
+          - name: name
+            data_type: string
+            description: "The name of the product"
+          - name: type
+            data_type: string
+            description: "The category or type of the product"
+          - name: price
+            data_type: integer
+            description: "The price of the product in cents"
+          - name: description
+            data_type: string
+            description: "The description of the product"
+      - name: raw_stores
+        description: "The store data from a CSV file in a GCS bucket"
+        external:
+          location: 'gs://rhythmix_raw/raw_data/raw_stores.csv'
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: id
+            data_type: string
+            description: "The id of the store"
+          - name: name
+            data_type: string
+            description: "The name of the store"
+          - name: opened_at
+            data_type: datetime
+            description: "The date on which the store was opened"
+          - name: tax_rate
+            data_type: decimal
+            description: "Tax rate of the store"
+      - name: raw_supplies
+        description: "The supplies data from a CSV file in a GCS bucket"
+        external:
+          location: 'gs://rhythmix_raw/raw_data/raw_supplies.csv'
+          options:
+            format: csv
+            skip_leading_rows: 1
+        columns:
+          - name: id
+            data_type: string
+            description: "The unquie supply id"
+          - name: name
+            data_type: string
+            description: "The name of the supply"
+          - name: cost
+            data_type: integer
+            description: "The cost of the supply"
+          - name: perishable
+            data_type: boolean
+            description: "Is the product perishable?"
+          - name: sku
+            data_type: string
+            description: "The sku code of the product"

@@ -1,5 +1,5 @@
 WITH items AS (
-    SELECT * FROM {{ ref('raw_items') }}
+    SELECT * FROM {{ source('gcs_sources', 'raw_items') }}
 ) SELECT 
     id AS item_id,
     order_id,
