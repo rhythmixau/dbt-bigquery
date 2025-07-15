@@ -7,3 +7,4 @@ SELECT
     tax_paid,
     order_total
 FROM {{ source('gcs_sources', 'raw_orders') }}
+WHERE order_total > 0

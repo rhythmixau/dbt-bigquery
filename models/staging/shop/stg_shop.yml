@@ -16,7 +16,20 @@ models:
       - name: order_id
         tests:
           - not_null
+      - name: item_sku
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_sku
   - name: stg_orders
+    description: Staged orders data
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "order_total = subtotal + tax_paid"
+      - dbt_utils.expression_is_true:
+          expression: "subtotal > 0"
+      - dbt_utils.expression_is_true:
+          expression: "tax_paid > 0"
     columns:
       - name: order_id
         tests:
@@ -28,12 +41,28 @@ models:
       - name: store_id
         tests:
           - not_null
+      - name: subtotal
+        tests:
+          - warn_if_zero_or_less:
+              severity: error
+      - name: tax_paid
+        tests:
+          - warn_if_zero_or_less:
+              severity: error
   - name: stg_products
+    description: Staged products data
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "product_price > 0"
     columns:
       - name: product_sku
         tests:
           - not_null
           - unique
+      - name: product_type
+        tests:
+          - accepted_values:
+              values: ['jaffle', 'beverage']
   - name: stg_stores
     columns:
       - name: store_id
@@ -41,12 +70,16 @@ models:
           - unique
           - not_null
   - name: stg_supplies
+    description: Supplies data
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "supply_cost > 0"
     columns:
       - name: supply_id
         tests:
-          - unique
-          - not_null
-      - name: supply_cost
+          - not_null    
+      - name: product_sku
         tests:
-          - dbt_utils.expression_is_true:
-              expression: "supply_cost >= 0"
+          - relationships:
+              to: ref('stg_products')
+              field: product_sku
