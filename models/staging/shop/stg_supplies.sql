@@ -1,9 +1,9 @@
 WITH supplies AS (
     SELECT * FROM {{ source('gcs_sources', 'raw_supplies') }}
 ) SELECT
-    id AS product_id,
-    name AS product_name,
-    cost AS product_cost,
+    id AS supply_id,
+    name AS supply_name,
+    cost AS supply_cost,
     perishable,
     sku AS product_sku
 FROM supplies
