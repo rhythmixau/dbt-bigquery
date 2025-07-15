@@ -49,6 +49,8 @@ models:
         tests:
           - warn_if_zero_or_less:
               severity: error
+      - name: order_total
+        description: '{{ doc("order_total") }}'
   - name: stg_products
     description: Staged products data
     tests:
