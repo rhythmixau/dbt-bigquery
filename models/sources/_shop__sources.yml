@@ -2,11 +2,12 @@ version: 2
 
 sources:
   - name: gcs_sources
+    description: A clone of a Postgres application database
     database: general-rhythmix-playground
     schema: raw_data
     tables:
       - name: raw_customers
-        description: "Users data loaded from CSV files in a GCS bucket"
+        description: Raw users data loaded from CSV files in a GCS bucket
         external:
           location: 'gs://rhythmix_raw/raw_data/raw_customers.csv'
           options:
@@ -15,15 +16,15 @@ sources:
         columns:
           - name: id
             data_type: string
-            description: "Unique UUID of the customer"
+            description: Unique UUID of the customer
             tests:
               - unique
               - not_null
           - name: name
             data_type: string
-            description: "The full-name of the customer"
+            description: The full-name of the customer
       - name: raw_items
-        description: "The detail of the order"
+        description: "Raw order items data, which is the content of what's in the order"
         external:
           location: 'gs://rhythmix_raw/raw_data/raw_items.csv'
           options:
@@ -40,7 +41,7 @@ sources:
             data_type: string
             description: "The sku code of the item"
       - name: raw_orders
-        description: "The orders data from CSV file in a GCS bucket"
+        description: "Raw orders data from CSV file in a GCS bucket"
         external:
           location: 'gs://rhythmix_raw/raw_data/raw_orders.csv'
           options:
@@ -72,7 +73,7 @@ sources:
             data_type: integer
             description: "The total value of the order (tax included) in cents"
       - name: raw_products
-        description: "The products data from CSV file in a GCS bucket"
+        description: "Raw products data from CSV file in a GCS bucket"
         external:
           location: 'gs://rhythmix_raw/raw_data/raw_products.csv'
           options:
@@ -95,7 +96,7 @@ sources:
             data_type: string
             description: "The description of the product"
       - name: raw_stores
-        description: "The store data from a CSV file in a GCS bucket"
+        description: "Raw store data from a CSV file in a GCS bucket"
         external:
           location: 'gs://rhythmix_raw/raw_data/raw_stores.csv'
           options:
@@ -115,7 +116,7 @@ sources:
             data_type: decimal
             description: "Tax rate of the store"
       - name: raw_supplies
-        description: "The supplies data from a CSV file in a GCS bucket"
+        description: "Raw supplies data from a CSV file in a GCS bucket"
         external:
           location: 'gs://rhythmix_raw/raw_data/raw_supplies.csv'
           options:
